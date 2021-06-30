@@ -1,0 +1,2 @@
+# ignore postgres data volumn
+main/postgres-data/*
