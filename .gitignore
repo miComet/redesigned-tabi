@@ -1,2 +1,3 @@
 # ignore postgres data volumn
 main/postgres-data/*
+main/__pycache__/*
