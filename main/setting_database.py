@@ -20,10 +20,10 @@ class Event(db.Model):
     title: str
 
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(200))
-    distination = db.Column(db.String(200))
-    date = db.Column(db.String(200))
-    title = db.Column(db.String(200))
+    code = db.Column(db.String(512))
+    distination = db.Column(db.String(512))
+    date = db.Column(db.String(512))
+    title = db.Column(db.String(512))
 
 
 @dataclass
@@ -34,7 +34,7 @@ class Picture(db.Model):
     event_id: int
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200))
-    link = db.Column(db.String(200))
+    title = db.Column(db.String(512))
+    link = db.Column(db.String(512))
     event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
     event = db.relationship("event")
