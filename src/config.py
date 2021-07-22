@@ -1,10 +1,7 @@
 import os
 
 
-class DevelopmentConfig:
-    # Flask
-    DEBUG = True
-
+class Config(object):
     # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = 'postgresql://{user}:{password}@{host}/postgres'.format(**{
         'user': os.getenv('DB_USER', 'postgres'),
@@ -14,5 +11,11 @@ class DevelopmentConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
+class DevelopmentConfig(Config):
+    # Flask
+    DEBUG = True
 
-Config = DevelopmentConfig
+class LoadDataConfig(Config):
+    # Flask
+    DEBUG = False
+    USE_RELOADER = False
