@@ -24,5 +24,6 @@ $ python3 run.py
 Make sure that the db service is running.
 
 ```shell=
-$ python3 load.py
+$ python3 load.py /path/to/json/dir/*.json
 ```
+(This command will load ALL jsonfile inside the dir to the DB)
