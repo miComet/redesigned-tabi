@@ -11,9 +11,14 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
+    # Flask
+    JSON_AS_ASCII = False
+
+
 class DevelopmentConfig(Config):
     # Flask
     DEBUG = True
+
 
 class LoadDataConfig(Config):
     # Flask

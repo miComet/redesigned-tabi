@@ -1,6 +1,8 @@
-from .models import User
+from .models import Event, BookInfo, Image
 
 
 __all__ = [
-    User,
+    Event,
+    BookInfo,
+    Image
 ]

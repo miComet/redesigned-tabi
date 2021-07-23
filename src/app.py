@@ -13,21 +13,11 @@ def create_app():
 
     return app
 
+
 app = create_app()
 
 
 @app.route('/')
 def list():
-    us = models.User.query.all()
-    return jsonify([u.serialize for u in us])
-    
-
-@app.route('/insert')
-def insert():
-    u = models.User(name='123')
-    db.session.add(u)
-    db.session.commit()
-    return jsonify({
-        'status': 'ok'
-    })
-    
+    es = models.Event.query.all()
+    return jsonify([e.serialize for e in es])
