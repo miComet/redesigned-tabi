@@ -25,8 +25,8 @@ class Event(db.Model):
     # hotel_info(json str)
     hotel_info = db.Column(db.Text)
 
-    # schedual_info(json_str)
-    schedual_info = db.Column(db.Text, nullable=False)
+    # schedule_info(json_str)
+    schedule_info = db.Column(db.Text, nullable=False)
 
     # tour_point(json_str)
     tour_point = db.Column(db.Text)
@@ -53,7 +53,7 @@ class Event(db.Model):
             'meal_info':       self.meal_info,
 
             'hotel_info':      json.loads(self.hotel_info),
-            'schedual_info':   json.loads(self.schedual_info),
+            'schedule_info':   json.loads(self.schedule_info),
             'tour_point':      json.loads(self.tour_point),
 
             'book_infos':      [b.serialize for b in self.book_infos],
