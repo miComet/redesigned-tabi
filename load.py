@@ -16,7 +16,7 @@ def transfer_to_event_obj(raw):
     return {
         'event_title': raw['event_title'],
         'event_url': raw['event_url'],
-        'tour_length': len(raw['schedual']),
+        'tour_length': len(raw['schedule']),
 
         'tour_type': raw['summary']['ツアータイプ'],
         'bus_guide': True if raw['summary']['バスガイド'] == 'あり' else False,
@@ -30,18 +30,18 @@ def transfer_to_event_obj(raw):
         # not include images_info
         'hotel_info': json.dumps([
             {
-                'artical': h['artical'],
+                'article': h['article'],
                 'title': h['title']
             }
             for h in raw['hotels']
         ]),
 
-        'schedual_info': json.dumps(raw['schedual']),
+        'schedule_info': json.dumps(raw['schedule']),
 
         # not include images_info
         'tour_point': json.dumps([
             {
-                'artical': t['artical'],
+                'article': t['article'],
                 'title': t['title']
             }
             for t in raw['tour_points']
@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
     with app.app_context():
         for f in files:
-            with open(f, 'r') as src:
+            with open(f, 'r', encoding='utf-8') as src:
                 raw = json.load(src)
                 event_raw = transfer_to_event_obj(raw)
                 book_infos_raw = transfer_to_bookinfo_objs(raw)
