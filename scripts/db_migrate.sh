@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-export FLASK_APP=../run.py
+cd $(dirname "$0")/../
+export FLASK_APP=./run.py
 flask db migrate
 flask db upgrade

@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-FLASK_APP=../run.py flask db init
+cd $(dirname "$0")/../
+FLASK_APP=./run.py flask db init
