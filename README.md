@@ -49,3 +49,5 @@ Note: You have to delete all the file under the storage path, after you finish t
 ```shell=
 $ act -j list-events-test -b
 ```
+
+Note: This will take 2x~3x of time then execute it directly.

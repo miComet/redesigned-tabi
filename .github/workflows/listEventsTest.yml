@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
     push:
         branches:
-            - master
+            - main
 jobs:
     list-events-test:
         name: list-events-test
