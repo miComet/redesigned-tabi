@@ -41,3 +41,11 @@ $ docker-compose up
 ```
 
 Note: You have to delete all the file under the storage path, after you finish the test.
+
+## To run docker actions locally for unittest
+
+-   Prerequisite: install [nektos/act](https://github.com/nektos/act)
+
+```shell=
+$ act -j list-events-test -b
+```
