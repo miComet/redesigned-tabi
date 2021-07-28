@@ -1,19 +1,33 @@
-version: '3.3'
+version: "3.3"
 
 services:
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
+    backend:
+        build:
+            context: .
+            dockerfile: backend_dev.dockerfile
+        environment:
+            DB_HOST: db
+            STORAGE_DIR: "/project/${STORAGE_SUBDIR}"
+        ports:
+            - 5000:5000
+        volumes:
+            - "${PROJECT_DIR}:/project"
+        depends_on:
+            - db
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+    db:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        volumes:
+            - "${PROJECT_DIR}/${STORAGE_SUBDIR}/postgres-data:/var/lib/postgresql/data"
+        ports:
+            - 5432:5432
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
