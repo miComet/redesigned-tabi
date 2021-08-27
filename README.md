@@ -47,7 +47,7 @@ Note: You have to delete all the file under the storage path, after you finish t
 -   Prerequisite: install [nektos/act](https://github.com/nektos/act)
 
 ```shell=
-$ act -j list-events-test -b
+$ act -j api-test -b
 ```
 
 Note: This will take 2x~3x of time then execute it directly.
