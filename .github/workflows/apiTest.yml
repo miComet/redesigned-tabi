@@ -1,4 +1,4 @@
-name: List events Test
+name: API Test
 
 on:
     workflow_dispatch:
@@ -14,8 +14,8 @@ on:
         branches:
             - main
 jobs:
-    list-events-test:
-        name: list-events-test
+    api-test:
+        name: api-test
         runs-on: ubuntu-latest
         env:
             ACTIONS_ALLOW_UNSECURE_COMMANDS: true
