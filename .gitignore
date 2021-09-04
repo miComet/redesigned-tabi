@@ -1,3 +1,4 @@
-# ignore postgres data volumn
-main/postgres-data/*
-main/__pycache__/*
+*__pycache__
+migrations
+storage_space/*
+.secrets

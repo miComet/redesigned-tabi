@@ -1,0 +1,68 @@
+name: API Test
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+    pull_request:
+        types: [opened, reopened, ready_for_review]
+        branches:
+            - main
+    pull_request_review_comment:
+        types: [created, edited]
+        branches:
+            - main
+jobs:
+    api-test:
+        name: api-test
+        runs-on: ubuntu-latest
+        env:
+            ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        steps:
+            - uses: actions/checkout@v1
+
+            - name: Install venv
+              uses: actions/setup-python@v2
+              with:
+                  python-version: "3.6.10"
+            - name: Install dependencies
+              run: |
+                  python3 -m pip install --upgrade pip
+                  pip3 install -r requirements.txt
+
+            - name: Install aws cli
+              uses: chrislennon/action-aws-cli@v1.1
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+
+            - name: Download docker-compose
+              run: |
+                  sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+                  sudo chmod +x /usr/local/bin/docker-compose
+
+            - name: Start backend & download jsons
+              run: |
+                  export PROJECT_DIR=$(pwd)
+                  export STORAGE_SUBDIR=storage_space
+                  export JSON_DIR=$PROJECT_DIR/$STORAGE_SUBDIR/json_infos/
+                  mkdir -p $JSON_DIR
+
+                  aws s3 ls ${{ secrets.CRAWLER_RESULT_STORAGE }}/ | grep 'bus_tour' | awk '{print $4}' | \
+                      xargs -I{} aws s3 cp ${{ secrets.CRAWLER_RESULT_STORAGE }}/{} $JSON_DIR
+
+                  docker-compose up -d
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+
+            - name: Do test
+              run: |
+                  sleep 5 # Wait for backend to be ready
+                  python3 tests/api_test.py
+
+            - name: Stop backend
+              run: |
+                  docker-compose down
+                  sudo rm -rf workflow storage_space __pycache__
